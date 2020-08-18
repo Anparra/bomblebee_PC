@@ -4,6 +4,9 @@ namespace SpriteKind {
     export const rayU = SpriteKind.create()
     export const rayD = SpriteKind.create()
 }
+scene.onHitWall(SpriteKind.rayD, function (sprite, location) {
+    mySprite.setVelocity(40, -70)
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     direction = 3
     setSpriteDirection()
@@ -69,7 +72,7 @@ function showinstructions () {
     Instructions("Tilt the Circuit playground left right,up,down to move the goose")
 }
 scene.onHitWall(SpriteKind.rayU, function (sprite, location) {
-	
+    mySprite.setVelocity(40, 70)
 })
 function Instructions (text: string) {
     game.showLongText(text, DialogLayout.Bottom)
@@ -312,7 +315,7 @@ sprites.onOverlap(SpriteKind.rayD, SpriteKind.Enemy, function (sprite, otherSpri
     PC()
 })
 scene.onHitWall(SpriteKind.rayF, function (sprite, location) {
-	
+    mySprite.setVelocity(40, 70)
 })
 sprites.onOverlap(SpriteKind.rayU, SpriteKind.Enemy, function (sprite, otherSprite) {
     mySprite.setVelocity(40, 70)
@@ -325,6 +328,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     music.powerDown.play()
     pause(blurry)
 })
+let rayD: Sprite = null
+let rayU: Sprite = null
+let rayF: Sprite = null
 let projectile: Sprite = null
 let epVY = 0
 let desiredVelocityY = 0
@@ -671,6 +677,62 @@ game.onUpdateInterval(2000, function () {
     projectile.setKind(SpriteKind.Enemy)
     projectile.y = randint(10, 150)
 })
-game.onUpdateInterval(500, function () {
-	
+game.onUpdateInterval(100, function () {
+    rayF = sprites.createProjectileFromSprite(img`
+        . . d d d d d d . . . . . . . . 
+        . . . . . . . . d . . . . . . . 
+        . . . . . . . . . d . . . . . . 
+        . . . . . . . . . . d . . . . . 
+        . . . . . . . . . . . d . . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . d . . . . 
+        . . . . . . . . . . d . . . . . 
+        . . . . . . . . . d . . . . . . 
+        . . . . . . . . d . . . . . . . 
+        . . d d d d d d . . . . . . . . 
+        `, mySprite, 300, 0)
+    rayF.setKind(SpriteKind.rayF)
+    rayU = sprites.createProjectileFromSprite(img`
+        . . d d d d d d . . . . . . . . 
+        . . . . . . . . d . . . . . . . 
+        . . . . . . . . . d . . . . . . 
+        . . . . . . . . . . d . . . . . 
+        . . . . . . . . . . . d . . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . d . . . . 
+        . . . . . . . . . . d . . . . . 
+        . . . . . . . . . d . . . . . . 
+        . . . . . . . . d . . . . . . . 
+        . . d d d d d d . . . . . . . . 
+        `, mySprite, 300, -300)
+    rayU.setKind(SpriteKind.rayU)
+    rayD = sprites.createProjectileFromSprite(img`
+        . . d d d d d d . . . . . . . . 
+        . . . . . . . . d . . . . . . . 
+        . . . . . . . . . d . . . . . . 
+        . . . . . . . . . . d . . . . . 
+        . . . . . . . . . . . d . . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . . d . . . 
+        . . . . . . . . . . . d . . . . 
+        . . . . . . . . . . d . . . . . 
+        . . . . . . . . . d . . . . . . 
+        . . . . . . . . d . . . . . . . 
+        . . d d d d d d . . . . . . . . 
+        `, mySprite, 300, 300)
+    rayD.setKind(SpriteKind.rayD)
 })
